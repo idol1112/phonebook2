@@ -27,7 +27,7 @@
 		<button type="submit">수정</button>
 	</form>
 	
-	<a href="./list.jsp">리스트 바로가기</a>
+	<a href="/phonebook2/pbc?action=list">리스트 바로가기</a>
 
 </body>
 </html>

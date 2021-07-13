@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.PhoneDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.PersonVo;
 
 @WebServlet("/pbc")
@@ -39,14 +40,18 @@ public class phoneController extends HttpServlet {
 
 		
 		//html작업 ---> jsp에게 시킨다 forword 한다
+	    /*
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/list.jsp");
 		rd.forward(request, response);
+		*/
+	    
+		WebUtil.forword(request, response, "/WEB-INF/list.jsp");
+		
 		}else if("wform".equals(action)) {
 			System.out.println("글쓰기폼");
 			
 			//writeForm.jsp 포워드 --> 데이터 x 
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/writeForm.jsp");
-			rd.forward(request, response);
+			WebUtil.forword(request, response, "/WEB-INF/writeform.jsp");
 		}else if("insert".equals(action)) {
 			System.out.println("[저장]");
 			
@@ -65,7 +70,8 @@ public class phoneController extends HttpServlet {
 			int count = phoneDao.personInsert(personVo);
 			
 			//리다이렉트
-			response.sendRedirect("/phonebook2/pbc?action=list");
+			//response.sendRedirect("/phonebook2/pbc?action=list");
+			WebUtil.redirect(request, response, "/phonebook2/pbc?action=list");
 		}else if("uform".equals(action)) {
 			System.out.println("[수정폼]");
 			
@@ -83,8 +89,10 @@ public class phoneController extends HttpServlet {
 			request.setAttribute("pVo", personVo);
 			
 			//updateForm.jsp 포워드 --> 데이터 x 
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/updateForm.jsp");
-			rd.forward(request, response);
+			//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/updateForm.jsp");
+			//rd.forward(request, response);
+			WebUtil.forword(request, response, "/WEB-INF/updateForm.jsp");
+			
 		}else if("update".equals(action)) {
 			System.out.println("[수정]");
 			
@@ -103,7 +111,7 @@ public class phoneController extends HttpServlet {
 			int count = phoneDao.personUpdate(personVo);
 			
 			//리다이렉트
-			response.sendRedirect("/phonebook2/pbc?action=list");
+			WebUtil.redirect(request, response, "/phonebook2/pbc?action=list");
 		}else if("delete".equals(action)) {
 			
 			//파라미터를 꺼낸다 id
@@ -114,7 +122,7 @@ public class phoneController extends HttpServlet {
 			int count = phoneDao.personDelete(id);
 			
 			//리다이렉트
-			response.sendRedirect("/phonebook2/pbc?action=list");
+			WebUtil.redirect(request, response, "/phonebook2/pbc?action=list");
 			
 		}
 	}
