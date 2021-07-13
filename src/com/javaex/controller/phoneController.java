@@ -67,7 +67,20 @@ public class phoneController extends HttpServlet {
 			//리다이렉트
 			response.sendRedirect("/phonebook2/pbc?action=list");
 		}else if("uform".equals(action)) {
-			System.out.println("수정폼");
+			System.out.println("[수정폼]");
+			
+			PhoneDao phoneDao = new PhoneDao();	
+
+			//id추출
+			int personId = Integer.parseInt(request.getParameter("id"));
+			System.out.println(personId); // 확인용
+			
+			//dao 에서 한사람(id)의 정보 가져오기
+			PersonVo personVo = phoneDao.getPerson(personId);
+			System.out.println(personVo.toString()); // 확인용
+			
+			//데이터 넣기  --request 어트리뷰트에 데이터를 넣어준다
+			request.setAttribute("pVo", personVo);
 			
 			//updateForm.jsp 포워드 --> 데이터 x 
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/updateForm.jsp");
